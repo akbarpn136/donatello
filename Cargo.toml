@@ -1,6 +1,6 @@
 [package]
 name = "donatello"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Arizal Akbar Zikri <akbarpn136@gmail.com>"]
 edition = "2018"
 
@@ -10,3 +10,4 @@ edition = "2018"
 actix-web = "2.0"
 actix-rt = "1.0"
 dotenv = "0.15.0"
+env_logger = "0.7.1"
