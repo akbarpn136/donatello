@@ -1,0 +1,39 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+template: |
+  ## Ini merupakan Jurnal Rust Actix Web Framework
+
+  Untuk video jurnal dapat mengunjungi https://youtube.com/user/akbarpn136
+
+  Perlu melakukan chat atau berminat gabung, masuk ke tautan berikut ini https://discord.gg/7dTG9sg
+
+  ## Perubahan yang Dilakukan
+  $CHANGES
+categories:
+  - title: '💣 Perubahan Total'
+    label: 'type: breaking'
+  - title: '🚀 Hal Baru'
+    label: 'type: enhancement'
+  - title: '🐛 Koreksi Bug'
+    label: 'type: bug'
+  - title: '🔨 Perawatan'
+    label: 'type: maintenance'
+  - title: '📝 Dokumentasi'
+    label: 'type: documentation'
+  - title: '🔗 Pembaruan Dependency'
+    label: 'type: dependencies'
+
+version-resolver:
+  major:
+    labels:
+      - 'type: breaking'
+  minor:
+    labels:
+      - 'type: enhancement'
+  patch:
+    labels:
+      - 'type: bug'
+      - 'type: maintenance'
+      - 'type: documentation'
+      - 'type: dependencies'
+      - 'type: security'
