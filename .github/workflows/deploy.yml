@@ -1,4 +1,4 @@
-name: Build & Deploy BBTA3 Website
+name: Jurnal Rust Actix
 
 on:
   push:
