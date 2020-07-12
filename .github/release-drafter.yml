@@ -11,29 +11,29 @@ template: |
   $CHANGES
 categories:
   - title: '💣 Perubahan Total'
-    label: 'type: breaking'
+    label: 'breaking'
   - title: '🚀 Hal Baru'
-    label: 'type: enhancement'
+    label: 'enhancement'
   - title: '🐛 Koreksi Bug'
-    label: 'type: bug'
+    label: 'bug'
   - title: '🔨 Perawatan'
-    label: 'type: maintenance'
+    label: 'maintenance'
   - title: '📝 Dokumentasi'
-    label: 'type: documentation'
+    label: 'documentation'
   - title: '🔗 Pembaruan Dependency'
-    label: 'type: dependencies'
+    label: 'dependencies'
 
 version-resolver:
   major:
     labels:
-      - 'type: breaking'
+      - 'breaking'
   minor:
     labels:
-      - 'type: enhancement'
+      - 'enhancement'
   patch:
     labels:
-      - 'type: bug'
-      - 'type: maintenance'
-      - 'type: documentation'
-      - 'type: dependencies'
-      - 'type: security'
+      - 'bug'
+      - 'maintenance'
+      - 'documentation'
+      - 'dependencies'
+      - 'security'
