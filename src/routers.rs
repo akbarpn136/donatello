@@ -7,10 +7,15 @@ struct User {
     email: String
 }
 
+#[derive(Deserialize)]
+struct Info {
+    kelompok: String
+}
+
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg
-        .route("/v1", web::get().to(|| HttpResponse::Ok().body("ini versi 1.")))
-        .route("/v1/user", web::get().to(|| {
+        .route("/v1/", web::get().to(|| HttpResponse::Ok().body("ini versi 1.")))
+        .route("/v1/user/", web::get().to(|| {
             let user = User {
                 nama: String::from("Fulan"),
                 email: String::from("fulan@gmail.com")
@@ -24,5 +29,17 @@ pub fn config(cfg: &mut web::ServiceConfig) {
             println!("{:?}", user_fromstring);
 
             HttpResponse::Ok().body("ini versi 1 untuk user")
+        }))
+        .route("/v1/user/{id}/", web::get().to(|id: web::Path<String>, informasi: Option<web::Query<Info>>| {
+            let body = if informasi.is_none() {
+                format!("User id: {}", id)
+            } else {
+                format!("User id: {} dengan kelompok {}", id, informasi.unwrap().kelompok)
+            };
+
+            HttpResponse::Ok().body(body)
+        }))
+        .route("/v1/user/", web::post().to(|payload: web::Form<User>| {
+            HttpResponse::Created().body(format!("User {} denagn email {} berhasil dibuat", payload.nama, payload.email))
         }));
 }
