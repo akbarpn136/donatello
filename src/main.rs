@@ -1,3 +1,4 @@
+mod user;
 mod routers;
 
 use std::io;
