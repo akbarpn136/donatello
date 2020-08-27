@@ -1,6 +1,6 @@
 [package]
 name = "donatello"
-version = "0.8.0"
+version = "0.9.0"
 authors = ["Arizal Akbar Zikri <akbarpn136@gmail.com>"]
 edition = "2018"
 
@@ -12,3 +12,6 @@ dotenv = "0.15.0"
 env_logger = "0.7.1"
 serde = "1.0.114"
 serde_json = "1.0.56"
+r2d2 = "0.8.9"
+r2d2_sqlite = "0.16.0"
+rusqlite = {version="0.23.0", features=["bundled"]}
