@@ -24,7 +24,7 @@ async fn main() -> io::Result<()> {
     let server = HttpServer::new(move || {
         App::new()
             .wrap(middleware::Logger::default())
-            .wrap(middleware::NormalizePath)
+            .wrap(middleware::NormalizePath::default())
             .data(AppState {
                 app_name: "donatello".to_string()
             })
