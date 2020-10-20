@@ -1,6 +1,10 @@
+#[macro_use]
+extern crate diesel;
+
 mod state;
 mod user;
 mod routers;
+mod schema;
 
 use std::io;
 use std::env;

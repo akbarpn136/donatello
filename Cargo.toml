@@ -1,6 +1,6 @@
 [package]
 name = "donatello"
-version = "0.12.0"
+version = "0.14.0"
 authors = ["Arizal Akbar Zikri <akbarpn136@gmail.com>"]
 edition = "2018"
 
@@ -12,5 +12,7 @@ dotenv = "0.15.0"
 env_logger = "0.7.1"
 serde = "1.0.114"
 serde_json = "1.0.56"
+bcrypt = "0.8.2"
 diesel = { version = "1.4.4", features = ["sqlite", "r2d2"] }
-rusqlite = {version="0.23.0", features=["bundled"]}
+rusqlite = { version ="0.23.0", features = ["bundled"] }
+uuid = { version = "0.8.1", features = ["serde", "v4"] }

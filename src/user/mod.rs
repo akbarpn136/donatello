@@ -1,3 +1,4 @@
 pub mod routers;
-pub mod model;
-pub mod interface;
+mod model;
+mod interface;
+mod handlers;
