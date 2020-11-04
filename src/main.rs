@@ -1,6 +1,10 @@
+#[macro_use]
+extern crate diesel;
+
 mod state;
 mod user;
 mod routers;
+mod schema;
 
 use std::io;
 use std::env;
@@ -24,7 +28,7 @@ async fn main() -> io::Result<()> {
     let server = HttpServer::new(move || {
         App::new()
             .wrap(middleware::Logger::default())
-            .wrap(middleware::NormalizePath)
+            .wrap(middleware::NormalizePath::default())
             .data(AppState {
                 app_name: "donatello".to_string()
             })

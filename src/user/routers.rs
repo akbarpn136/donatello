@@ -3,13 +3,17 @@ use actix_web::{web, HttpResponse};
 use crate::user::model::User;
 use crate::user::interface::Info;
 use crate::state::AppState;
+use crate::user::handlers::tambah_user;
 
 pub fn config(cfg: &mut web::ServiceConfig) {
-    cfg.route("/", web::get().to(|state: web::Data<AppState>| {
+    cfg.route("/", web::post().to(tambah_user))
+        .route("/", web::get().to(|state: web::Data<AppState>| {
             let app_name = &state.app_name;
             let user = User {
+                id: "".to_string(),
                 nama: String::from("Fulan"),
-                email: String::from("fulan@gmail.com")
+                email: String::from("fulan@gmail.com"),
+                password: "".to_string()
             };
 
             let user_tostring = serde_json::to_string(&user).unwrap();
@@ -35,13 +39,5 @@ pub fn config(cfg: &mut web::ServiceConfig) {
             };
 
             HttpResponse::Ok().body(body)
-        }))
-        .route("/", web::post().to(|payload: web::Form<User>,
-                                    state: web::Data<AppState>| {
-            let app_name = &state.app_name;
-            HttpResponse::Created().body(
-                format!("User {} denagn email {} berhasil dibuat melalui {}", payload.nama,
-                        payload.email, app_name)
-            )
         }));
 }
