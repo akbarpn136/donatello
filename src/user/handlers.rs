@@ -2,7 +2,7 @@ use uuid::Uuid;
 use bcrypt::hash;
 use actix_web::{HttpResponse, web, Error, ResponseError};
 use diesel::r2d2::{Pool, ConnectionManager};
-use diesel::{SqliteConnection, insert_into, RunQueryDsl};
+use diesel::{SqliteConnection, insert_into, RunQueryDsl, QueryDsl, ExpressionMethods};
 
 use crate::user::model::User;
 use crate::schema::users::dsl::*;
@@ -44,6 +44,21 @@ pub async fn ambil_user(pool: web::Data<DbPool>) -> Result<HttpResponse, Error> 
         Ok(lihat_user)
     }).await.map_err(|e| {
         e.error_response()
+    })?;
+
+    Ok(HttpResponse::Ok().json(user))
+}
+
+pub async fn ambil_user_id(uid: web::Path<Uuid>, pool: web::Data<DbPool>) -> Result<HttpResponse, Error> {
+    let conn = pool.get().unwrap();
+    let user = web::block(move || -> Result<Option<User>, diesel::result::Error> {
+        let user_id = users
+            .filter(id.eq(uid.to_string()))
+            .first::<User>(&conn)?;
+
+        Ok(Some(user_id))
+    }).await.map_err(|err| {
+        err.error_response()
     })?;
 
     Ok(HttpResponse::Ok().json(user))
