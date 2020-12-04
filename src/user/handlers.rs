@@ -6,7 +6,7 @@ use diesel::{SqliteConnection, insert_into, RunQueryDsl, QueryDsl, ExpressionMet
 
 use crate::user::model::User;
 use crate::schema::users::dsl::*;
-use crate::user::interface::UserBaru;
+use crate::user::dto::{UserBaru, UbahUser};
 
 type DbPool = Pool<ConnectionManager<SqliteConnection>>;
 
@@ -60,6 +60,28 @@ pub async fn ambil_user_id(uid: web::Path<Uuid>, pool: web::Data<DbPool>) -> Res
     }).await.map_err(|err| {
         err.error_response()
     })?;
+
+    Ok(HttpResponse::Ok().json(user))
+}
+
+pub async fn ubah_user_id(
+    uid: web::Path<Uuid>,
+    payload: web::Form<UbahUser>,
+    pool: web::Data<DbPool>
+) -> Result<HttpResponse, Error> {
+    let conn = pool.get().unwrap();
+    let user = web::block(move || -> Result<User, diesel::result::Error> {
+        diesel::update(users.filter(id.eq(uid.to_string())))
+            .set(nama.eq(payload.0.nama))
+            .execute(&conn)
+            .unwrap();
+
+        let user_id = users
+            .filter(id.eq(uid.to_string()))
+            .first::<User>(&conn)?;
+
+        Ok(user_id)
+    }).await.map_err(|err| err.error_response())?;
 
     Ok(HttpResponse::Ok().json(user))
 }
