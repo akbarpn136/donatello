@@ -85,3 +85,22 @@ pub async fn ubah_user_id(
 
     Ok(HttpResponse::Ok().json(user))
 }
+
+pub async fn hapus_user_id(
+    uid: web::Path<Uuid>,
+    pool: web::Data<DbPool>
+) -> Result<HttpResponse, Error> {
+    let conn = pool.get().unwrap();
+    let user = web::block(move || -> Result<usize, diesel::result::Error> {
+        let count = diesel::delete(
+            users.filter(
+                id.eq(uid.to_string())
+            )
+        ).execute(&conn).unwrap();
+
+        Ok(count)
+    }).await
+        .map_err(|err| err.error_response())?;
+
+    Ok(HttpResponse::Ok().body(format!("Jumlah user yang dihapus {}", user)))
+}
