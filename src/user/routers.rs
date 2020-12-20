@@ -3,7 +3,8 @@ use crate::user::handlers::{
     tambah_user, ambil_user,
     ambil_user_id,
     ubah_user_id,
-    hapus_user_id
+    hapus_user_id,
+    login
 };
 
 pub fn config(cfg: &mut web::ServiceConfig) {
@@ -11,5 +12,6 @@ pub fn config(cfg: &mut web::ServiceConfig) {
         .route("/", web::get().to(ambil_user))
         .route("/{id}/", web::get().to(ambil_user_id))
         .route("/{id}/", web::put().to(ubah_user_id))
-        .route("/{id}/", web::delete().to(hapus_user_id));
+        .route("/{id}/", web::delete().to(hapus_user_id))
+        .route("/login/", web::post().to(login));
 }

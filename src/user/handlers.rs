@@ -1,12 +1,12 @@
 use uuid::Uuid;
-use bcrypt::hash;
+use bcrypt::{hash, verify};
 use actix_web::{HttpResponse, web, Error, ResponseError};
 use diesel::r2d2::{Pool, ConnectionManager};
 use diesel::{SqliteConnection, insert_into, RunQueryDsl, QueryDsl, ExpressionMethods};
 
 use crate::user::model::User;
 use crate::schema::users::dsl::*;
-use crate::user::dto::{UserBaru, UbahUser};
+use crate::user::dto::{UserBaru, UbahUser, LoginUser};
 
 type DbPool = Pool<ConnectionManager<SqliteConnection>>;
 
@@ -103,4 +103,36 @@ pub async fn hapus_user_id(
         .map_err(|err| err.error_response())?;
 
     Ok(HttpResponse::Ok().body(format!("Jumlah user yang dihapus {}", user)))
+}
+
+pub async fn login(
+    payload: web::Form<LoginUser>,
+    pool: web::Data<DbPool>
+) -> Result<HttpResponse, Error> {
+    let conn = pool.get().unwrap();
+    let mail = payload.0.email;
+    let pwd = payload.0.password;
+
+    let user_id = web::block(move || -> Result<Option<User>, diesel::result::Error> {
+        let usr = users.filter(email.eq(mail))
+            .first::<User>(&conn)?;
+
+        Ok(Some(usr))
+    }).await.map_err(|err| err.error_response())?;
+
+    let err_message = Error::from(
+        HttpResponse::Unauthorized().body("Email/Password tidak ditemukan.")
+    );
+
+    if let Some(usr) = user_id {
+        let validkah = verify(pwd, &usr.password).unwrap();
+
+        if validkah {
+            Ok(HttpResponse::Ok().body("Selamat datang di Donatello."))
+        } else {
+            Err(err_message)
+        }
+    } else {
+        Err(err_message)
+    }
 }
