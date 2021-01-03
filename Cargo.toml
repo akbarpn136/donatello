@@ -1,6 +1,6 @@
 [package]
 name = "donatello"
-version = "0.14.0"
+version = "0.20.0"
 authors = ["Arizal Akbar Zikri <akbarpn136@gmail.com>"]
 edition = "2018"
 
