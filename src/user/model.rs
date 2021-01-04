@@ -1,9 +1,8 @@
 use serde::{Serialize, Deserialize};
-use diesel::Insertable;
 
 use crate::schema::users;
 
-#[derive(Debug, Serialize, Deserialize, Insertable)]
+#[derive(Debug, Serialize, Deserialize, Insertable, Queryable)]
 pub struct User {
     pub id: String,
     pub nama: String,
