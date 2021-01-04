@@ -11,3 +11,10 @@ pub struct User {
     #[serde(skip_serializing)]
     pub password: String
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Klaim {
+    pub sub: String,
+    pub iat: i64,
+    pub exp: i64
+}

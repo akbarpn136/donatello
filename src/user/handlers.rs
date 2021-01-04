@@ -4,9 +4,13 @@ use actix_web::{HttpResponse, web, Error, ResponseError};
 use diesel::r2d2::{Pool, ConnectionManager};
 use diesel::{SqliteConnection, insert_into, RunQueryDsl, QueryDsl, ExpressionMethods};
 
-use crate::user::model::User;
+use crate::user::model::{User, Klaim};
 use crate::schema::users::dsl::*;
 use crate::user::dto::{UserBaru, UbahUser, LoginUser};
+
+use std::env;
+use chrono::{Utc, Duration};
+use jsonwebtoken::{encode, Header, EncodingKey};
 
 type DbPool = Pool<ConnectionManager<SqliteConnection>>;
 
@@ -128,7 +132,22 @@ pub async fn login(
         let validkah = verify(pwd, &usr.password).unwrap();
 
         if validkah {
-            Ok(HttpResponse::Ok().body("Selamat datang di Donatello."))
+            let secret = env::var("APP_SECRET").unwrap();
+            let iat = Utc::now();
+            let exp = iat + Duration::days(7);
+            let klaim = Klaim {
+                sub: usr.nama,
+                iat: iat.timestamp_nanos(),
+                exp: exp.timestamp_nanos()
+            };
+
+            let token = encode(
+                &Header::default(),
+                &klaim,
+                &EncodingKey::from_secret(secret.as_bytes())
+            ).unwrap();
+
+            Ok(HttpResponse::Ok().body(token))
         } else {
             Err(err_message)
         }
