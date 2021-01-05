@@ -11,6 +11,7 @@ bentuk file _.env_ sebagai berikut:
 RUST_LOG=debug
 APP_HOST=127.0.0.1
 APP_PORT=8080
+APP_SECRET=donatello
 DATABASE_URL=donatello.db
 ```
 
