@@ -87,7 +87,6 @@ This will try to verify the completion of every exercise in a predetermined orde
 ```bash
 rustlings verify
 ```
-
 This will do the same as watch, but it'll quit after running.
 
 In case you want to go by your own order, or want to only verify a single exercise, you can run:
