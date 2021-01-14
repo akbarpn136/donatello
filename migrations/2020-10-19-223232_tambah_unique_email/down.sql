@@ -1,1 +1,0 @@
-DROP INDEX autoindex_users_email
