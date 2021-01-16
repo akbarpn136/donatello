@@ -1,4 +1,4 @@
-### Variables
+### Variables (we're done)
 
 Here you'll learn about simple variables.
 
