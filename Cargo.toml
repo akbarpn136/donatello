@@ -1,18 +1,23 @@
 [package]
-name = "donatello"
-version = "0.18.0"
-authors = ["Arizal Akbar Zikri <akbarpn136@gmail.com>"]
+name = "rustlings"
+version = "4.3.0"
+authors = ["Marisa <mokou@posteo.de>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-actix-web = "3.0.2"
-dotenv = "0.15.0"
-env_logger = "0.7.1"
-serde = "1.0.114"
-serde_json = "1.0.56"
-bcrypt = "0.8.2"
-diesel = { version = "1.4.4", features = ["sqlite", "r2d2"] }
-rusqlite = { version ="0.23.0", features = ["bundled"] }
-uuid = { version = "0.8.1", features = ["serde", "v4"] }
+clap = "2.32.0"
+indicatif = "0.10.3"
+console = "0.7.7"
+notify = "4.0.15"
+toml = "0.4.10"
+regex = "1.1.6"
+serde = {version = "1.0.10", features = ["derive"]}
+
+[[bin]]
+name = "rustlings"
+path = "src/main.rs"
+
+[dev-dependencies]
+assert_cmd = "0.11.0"
+predicates = "1.0.1"
+glob = "0.3.0"
