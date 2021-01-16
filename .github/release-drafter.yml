@@ -1,7 +1,7 @@
 name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 template: |
-  ## Ini merupakan Jurnal Rust Actix Web Framework
+  ## Ini merupakan Pembelajaran Rust dari Kesalahan
 
   Untuk video jurnal dapat mengunjungi https://youtube.com/user/akbarpn136
 

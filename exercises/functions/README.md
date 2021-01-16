@@ -1,4 +1,4 @@
-### Functions
+### Functions (we're done)
 
 Here, you'll learn how to write functions and how Rust's compiler can trace things way back.
 
