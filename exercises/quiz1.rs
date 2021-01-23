@@ -11,6 +11,13 @@
 
 // Put your function here!
 // fn ..... {
+fn calculate_apple_price(jumlah: i32) -> i32 {
+    if jumlah > 40 {
+        1 * jumlah
+    } else {
+        2 * jumlah
+    }
+}
 
 // Don't modify this function!
 #[test]
