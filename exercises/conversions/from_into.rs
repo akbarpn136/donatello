@@ -33,10 +33,27 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of Person
 // Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        match conv(s) {
+            Some(person) => person,
+            _ => Person::default()
+        }
+    }
+}
+
+fn conv(s: &str) -> Option<Person> {
+    let koleksi = s.split(",").collect::<Vec<&str>>();
+    let name: &str = koleksi.first()?;
+    let age: &str = koleksi.last()?;
+
+    if koleksi.len() == 0 || name.is_empty() || age.is_empty() {
+        None
+    } else {
+        let age = age.parse::<usize>().ok()?;
+
+        Some(Person { name: name.to_string(), age })
     }
 }
 
