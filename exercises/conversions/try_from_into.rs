@@ -11,7 +11,6 @@ struct Color {
     blue: u8,
 }
 
-// I AM NOT DONE
 
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
@@ -22,22 +21,56 @@ struct Color {
 // but the slice implementation needs to check the slice length!
 // Also note that correct RGB color values must be integers in the 0..=255 range.
 
+fn in_range(val: &[u8; 3]) -> bool {
+    val.iter().all(|&c| {
+        c >= 0 && c <= 255
+    })
+}
+
 // Tuple implementation
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = String;
-    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {}
+    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let (red, green, blue) = tuple;
+
+        let red = u8::try_from(red)
+            .map_err::<String, _>(|_| String::from("Tidak dapat dikonversi"))?;
+        let green = u8::try_from(green)
+            .map_err::<String, _>(|_| String::from("Tidak dapat dikonversi"))?;
+        let blue = u8::try_from(blue)
+            .map_err::<String, _>(|_| String::from("Tidak dapat dikonversi"))?;
+
+        if in_range(&[red, green, blue]) {
+            Ok(Color {
+                red,
+                green,
+                blue
+            })
+        } else {
+            Err(String::from("Gagal melakukan konversi"))
+        }
+    }
 }
 
 // Array implementation
 impl TryFrom<[i16; 3]> for Color {
     type Error = String;
-    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {}
+    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let [red, green, blue] = arr;
+
+        Color::try_from((red, green, blue))
+    }
 }
 
 // Slice implementation
 impl TryFrom<&[i16]> for Color {
     type Error = String;
-    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {}
+    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        let arr: &[i16; 3] = slice.try_into()
+            .map_err(|_| String::from("Tidak dapat dikonversi"))?;
+
+        Color::try_from(*arr)
+    }
 }
 
 fn main() {
