@@ -10,7 +10,7 @@ struct Person {
     age: usize,
 }
 
-// I AM NOT DONE
+
 // Steps:
 // 1. If the length of the provided string is 0, then return an error
 // 2. Split the given string on the commas present in it
@@ -23,6 +23,23 @@ struct Person {
 impl FromStr for Person {
     type Err = String;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        let koleksi = s.split(",").collect::<Vec<&str>>();
+        let name: &str = koleksi.first().ok_or(String::from("No name"))?;
+        let age: &str = koleksi.last().ok_or(String::from("No age"))?;
+        let age = age.parse::<usize>()
+            .map_err::<String, _>(|_| String::from("Tidak dapat dikonversi"))?;
+
+        // if name.is_empty() {
+        //     Err(String::from("No name"))
+        // } else {
+        //     Ok(Person { name: name.to_string(), age })
+        // }
+
+        if name.is_empty() {
+            return Err(String::from("No name"));
+        }
+
+        Ok(Person { name: name.to_string(), age })
     }
 }
 
